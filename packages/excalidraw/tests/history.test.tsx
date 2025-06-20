@@ -243,6 +243,37 @@ describe("history", () => {
       ]);
     });
 
+    it("should not modify anything on unrelated appstate change", async () => {
+      const rect = API.createElement({ type: "rectangle" });
+      await render(
+        <Excalidraw
+          handleKeyboardGlobally={true}
+          initialData={{
+            elements: [rect],
+          }}
+        />,
+      );
+
+      API.updateScene({
+        appState: {
+          viewModeEnabled: true,
+        },
+        captureUpdate: CaptureUpdateAction.NEVER,
+      });
+
+      await waitFor(() => {
+        expect(h.state.viewModeEnabled).toBe(true);
+        expect(API.getUndoStack().length).toBe(0);
+        expect(API.getRedoStack().length).toBe(0);
+        expect(h.elements).toEqual([
+          expect.objectContaining({ id: rect.id, isDeleted: false }),
+        ]);
+        expect(h.store.snapshot.elements.get(rect.id)).toEqual(
+          expect.objectContaining({ id: rect.id, isDeleted: false }),
+        );
+      });
+    });
+
     it("should not clear the redo stack on standalone appstate change", async () => {
       await render(<Excalidraw handleKeyboardGlobally={true} />);
 
@@ -611,6 +642,19 @@ describe("history", () => {
             ...deerImageDimensions,
           }),
         ]);
+
+        // need to check that delta actually contains initialized image element (with fileId & natural dimensions)
+        expect(
+          Object.values(h.history.undoStack[0].elements.removed)[0].deleted,
+        ).toEqual(
+          expect.objectContaining({
+            type: "image",
+            fileId: expect.any(String),
+            x: expect.toBeNonNaNNumber(),
+            y: expect.toBeNonNaNNumber(),
+            ...deerImageDimensions,
+          }),
+        );
       });
 
       Keyboard.undo();
@@ -722,6 +766,18 @@ describe("history", () => {
             ...smileyImageDimensions,
           }),
         ]);
+        // need to check that delta actually contains initialized image element (with fileId & natural dimensions)
+        expect(
+          Object.values(h.history.undoStack[0].elements.removed)[0].deleted,
+        ).toEqual(
+          expect.objectContaining({
+            type: "image",
+            fileId: expect.any(String),
+            x: expect.toBeNonNaNNumber(),
+            y: expect.toBeNonNaNNumber(),
+            ...smileyImageDimensions,
+          }),
+        );
       });
 
       Keyboard.undo();
