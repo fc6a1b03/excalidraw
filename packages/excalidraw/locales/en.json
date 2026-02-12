@@ -171,7 +171,9 @@
     "linkToElement": "Link to object",
     "wrapSelectionInFrame": "Wrap selection in frame",
     "tab": "Tab",
-    "shapeSwitch": "Switch shape"
+    "shapeSwitch": "Switch shape",
+    "preferences": "Preferences",
+    "preferences_toolLock": "Tool lock"
   },
   "elementLink": {
     "title": "Link to object",
@@ -557,7 +559,9 @@
   },
   "welcomeScreen": {
     "app": {
-      "center_heading": "All your data is saved locally in your browser.",
+      "center_heading": "Your drawings are saved in your browser's storage.",
+      "center_heading_line2": "Browser storage can be cleared unexpectedly.",
+      "center_heading_line3": "Save your work to a file regularly to avoid losing it.",
       "center_heading_plus": "Did you want to go to the Excalidraw+ instead?",
       "menuHint": "Export, preferences, languages, ..."
     },
@@ -617,12 +621,12 @@
     "inputPlaceholder": "Write Mermaid diagram defintion here..."
   },
   "ttd": {
-    "error": "Error!",
-    "errorMermaidSyntax": "Mermaid syntax error"
+    "error": "Error!"
   },
   "chat": {
     "inputPlaceholder": "Start typing your diagram idea here... ({{shortcut}} for new line)",
     "inputPlaceholderWithMessages": "Continue refining your diagram...",
+    "generating": "Generating...",
     "rateLimitRemaining": "{{count}} requests left today",
     "role": {
       "user": "You",
@@ -652,7 +656,8 @@
       "fixInMermaid": "Edit Mermaid manually →",
       "aiRepair": "Regenerate (auto-fix) →",
       "requestAborted": "Request aborted",
-      "requestFailed": "Request failed"
+      "requestFailed": "Request failed",
+      "mermaidParseError": "Mermaid syntax error"
     },
     "rateLimit": {
       "messageLimit": "You've hit your AI limit on the free plan. Try out Excalidraw+ for more or come back tomorrow.",
